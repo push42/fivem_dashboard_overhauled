@@ -79,8 +79,8 @@ fivem_dashboard/
 ### Prerequisites
 
 - Node.js 18+ and npm
-- PHP 8+ with PDO MySQL extension
-- MySQL/MariaDB database
+- PHP 8+ with PDO MySQL/PostgreSQL extension
+- **Database**: MySQL 8.0+ OR PostgreSQL 12+ (your choice!)
 - Web server (Apache/Nginx)
 
 ### 1. Clone and Install Dependencies
@@ -95,30 +95,58 @@ npm install
 
 Edit `api/config/database.php` with your database credentials:
 
+#### Option A: MySQL (Most Common)
+
 ```php
-// Main dashboard database
+// Choose MySQL
+define('DB_TYPE', 'mysql');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'webdev');
 define('DB_USER', 'root');
 define('DB_PASS', '');
+define('DB_PORT', 3306);
 
-// FiveM server database
+// FiveM server database (can be same DB)
+define('FIVEM_DB_TYPE', 'mysql');
 define('FIVEM_DB_HOST', 'localhost');
-define('FIVEM_DB_NAME', 'your_fivem_database');
+define('FIVEM_DB_NAME', 'webdev'); // Or separate FiveM database
 define('FIVEM_DB_USER', 'root');
 define('FIVEM_DB_PASS', '');
+```
 
-// TrackyServer API (optional)
-define('TRACKY_SERVER_KEY', 'your_api_key');
-define('TRACKY_SERVER_ID', 'your_server_id');
+#### Option B: PostgreSQL (Advanced)
+
+```php
+// Choose PostgreSQL
+define('DB_TYPE', 'postgresql');
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'webdev');
+define('DB_USER', 'postgres');
+define('DB_PASS', 'your_password');
+define('DB_PORT', 5432);
+
+// FiveM server database (can be same DB)
+define('FIVEM_DB_TYPE', 'postgresql');
+define('FIVEM_DB_HOST', 'localhost');
+define('FIVEM_DB_NAME', 'webdev'); // Or separate FiveM database
+define('FIVEM_DB_USER', 'postgres');
+define('FIVEM_DB_PASS', 'your_password');
 ```
 
 ### 3. Import Database Schema
 
-Import the SQL file to create required tables:
+Choose the appropriate SQL file for your database:
+
+#### For MySQL
 
 ```bash
-mysql -u root -p webdev < sql/fivem_dashboard.sql
+mysql -u root -p webdev < sql/fivem_dashboard_mysql.sql
+```
+
+#### For PostgreSQL
+
+```bash
+psql -U postgres -d webdev -f sql/fivem_dashboard_postgresql.sql
 ```
 
 ### 4. Build for Production
