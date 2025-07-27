@@ -2,6 +2,8 @@
 
 A completely modernized FiveM server administration dashboard built with **React 19.1**, modern PHP backend, and Tailwind CSS.
 
+![Main Preview](main.png)
+
 ## 🚀 Production Ready
 
 **Want to deploy this dashboard?** It's production-ready with mockup data included!
