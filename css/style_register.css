@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(to right, #0a0a0a, #1b1b1b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    margin: 0;
+    color: #fff;
+}
+
+.register-container {
+    background: #121212;
+    padding: 60px 80px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+    width: 450px;
+    max-width: 90%;
+}
+
+.header-text h2 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #1e90ff;
+}
+
+.form-field {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.register-container label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 10px;
+    color: #eee;
+}
+
+.register-container input[type="text"],
+.register-container input[type="password"] {
+    padding: 15px;
+    border: 2px solid #333;
+    background: #333;
+    border-radius: 10px;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    width: 100%;
+}
+
+.register-container input[type="text"]:focus,
+.register-container input[type="password"]:focus {
+    border-color: #1e90ff;
+}
+
+.register-container input[type="submit"] {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    background-color: #1e90ff;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 40px;
+}
+
+.register-container input[type="submit"]:hover {
+    background-color: #0066cc;
+    margin-top: 40px;
+}
+
+.form-icons,
+.form-icons2,
+.form-icons3,
+.form-icons4 {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #1e90ff;
+}
+
+
+.form-field label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 20px 30px;
+  }
+}
+
+.register-logo {
+    display: block;
+    max-width: 150px; /* You can adjust the size as needed */
+    margin: 0 auto 2px auto; /* Center align with margin below */
+    margin-bottom: -35px;
+}
