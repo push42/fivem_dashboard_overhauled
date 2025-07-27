@@ -2,7 +2,7 @@
 
 ## Before You Start
 - [ ] Node.js installed locally (for building)
-- [ ] Web hosting with PHP 8.0+ and MySQL
+- [ ] Web hosting with PHP 8.0+ and **MySQL OR PostgreSQL**
 - [ ] Domain/subdomain ready (e.g., 5md.p42.studio)
 
 ## Step 1: Build Locally
@@ -19,10 +19,19 @@ Upload to your web hosting:
 - [ ] `sql/` folder → for database setup
 - [ ] `.htaccess.production` → rename to `.htaccess`
 
-## Step 3: Database Setup
+## Step 3: Database Setup (Choose One)
+
+### Option A: MySQL (Most Common)
 - [ ] Create MySQL database in hosting panel
 - [ ] Import `sql/fivem_dashboard_mysql.sql`
-- [ ] Update `api/config/database.php` with your DB credentials
+- [ ] Set `DB_TYPE` to `'mysql'` in `api/config/database.php`
+- [ ] Update MySQL credentials in `api/config/database.php`
+
+### Option B: PostgreSQL (Advanced)
+- [ ] Create PostgreSQL database (if supported by hosting)
+- [ ] Import `sql/fivem_dashboard_postgresql.sql`
+- [ ] Set `DB_TYPE` to `'postgresql'` in `api/config/database.php`
+- [ ] Update PostgreSQL credentials in `api/config/database.php`
 
 ## Step 4: Test
 - [ ] Visit your domain (e.g., https://5md.p42.studio)

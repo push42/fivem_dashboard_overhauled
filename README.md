@@ -2,7 +2,7 @@
 
 A completely modernized FiveM server administration dashboard built with **React 19.1**, modern PHP backend, and Tailwind CSS.
 
-## 🚀 Production Ready!
+## 🚀 Production Ready
 
 **Want to deploy this dashboard?** It's production-ready with mockup data included!
 
@@ -10,11 +10,10 @@ A completely modernized FiveM server administration dashboard built with **React
 
 - ✅ **React 19.1** - Latest React with best performance
 - ✅ **Zero vulnerabilities** - All security issues fixed
+- ✅ **Dual Database Support** - MySQL OR PostgreSQL (your choice!)
 - ✅ **Mockup data included** - Works without FiveM server
 - ✅ **15-minute deployment** - Simple upload process
-- ✅ **Mobile responsive** - Works on all devices
-
-## 🚀 Features
+- ✅ **Mobile responsive** - Works on all devices## 🚀 Features
 
 ### Core Dashboard Features
 
@@ -29,11 +28,12 @@ A completely modernized FiveM server administration dashboard built with **React
 
 ### Technical Features
 
-- **React 18** with modern hooks and concurrent features
+- **React 19.1** with modern hooks and concurrent features (updated from React 18!)
 - **React Query** for efficient server state management
 - **React Router 6** for client-side routing
 - **Tailwind CSS 3.4+** for modern, responsive design
 - **Modern PHP 8+ API** with PDO and prepared statements
+- **Dual Database Support** - MySQL 8.0+ OR PostgreSQL 12+ with full feature parity
 - **Real-time updates** with automatic data refreshing
 - **Responsive design** - works on desktop, tablet, and mobile
 - **Authentication system** with session management

@@ -22,7 +22,7 @@
 
 - Node.js (for building locally)
 - PHP 8.0+ on your hosting
-- MySQL database on your hosting
+- **Database**: MySQL 8.0+ OR PostgreSQL 12+ (your choice!)
 
 ### Step 1: Build the Application Locally
 
@@ -36,20 +36,59 @@ npm run build
 
 This creates a `dist/` folder with optimized production files.
 
-### Step 2: Prepare Database
+### Step 2: Choose & Prepare Database
+
+#### Option A: MySQL (Most Common for Shared Hosting)
 
 1. **Create MySQL database** on your Hetzner hosting panel
 2. **Update database credentials** in `api/config/database.production.php`:
 
    ```php
+   // Choose MySQL
+   define('DB_TYPE', 'mysql');
    define('DB_NAME', 'your_actual_database_name');
    define('DB_USER', 'your_database_username');
    define('DB_PASS', 'your_database_password');
+   define('DB_HOST', 'localhost'); // or your DB host
+   define('DB_PORT', 3306);
+
+   // FiveM database (can be same for mockup data)
+   define('FIVEM_DB_TYPE', 'mysql');
+   define('FIVEM_DB_NAME', 'your_actual_database_name');
+   define('FIVEM_DB_USER', 'your_database_username');
+   define('FIVEM_DB_PASS', 'your_database_password');
    ```
 
-3. **Import the database schema**:
+3. **Import the MySQL schema**:
    - Upload `sql/fivem_dashboard_mysql.sql` to your hosting
-   - Import it via phpMyAdmin or command line
+   - Import via phpMyAdmin or command line: `mysql -u username -p database_name < fivem_dashboard_mysql.sql`
+
+#### Option B: PostgreSQL (Advanced/VPS Hosting)
+
+1. **Create PostgreSQL database** (if your hosting supports it)
+2. **Update database credentials** in `api/config/database.production.php`:
+
+   ```php
+   // Choose PostgreSQL
+   define('DB_TYPE', 'postgresql');
+   define('DB_NAME', 'your_actual_database_name');
+   define('DB_USER', 'your_database_username');
+   define('DB_PASS', 'your_database_password');
+   define('DB_HOST', 'localhost'); // or your DB host
+   define('DB_PORT', 5432);
+
+   // FiveM database (can be same for mockup data)
+   define('FIVEM_DB_TYPE', 'postgresql');
+   define('FIVEM_DB_NAME', 'your_actual_database_name');
+   define('FIVEM_DB_USER', 'your_database_username');
+   define('FIVEM_DB_PASS', 'your_database_password');
+   ```
+
+3. **Import the PostgreSQL schema**:
+   - Upload `sql/fivem_dashboard_postgresql.sql` to your hosting
+   - Import via command line: `psql -U username -d database_name -f fivem_dashboard_postgresql.sql`
+
+> **💡 Recommendation**: Most shared hosting (like Hetzner webspace) supports MySQL by default. Use PostgreSQL only if you have VPS/dedicated hosting or specific PostgreSQL support.
 
 ### Step 3: Upload Files
 
@@ -113,6 +152,24 @@ Upload these files/folders to your subdomain folder (`5md.p42.studio`):
 └── manifest.json           # PWA manifest
 ```
 
+## Database Features Comparison
+
+Our dashboard supports both database systems with full feature parity:
+
+| Feature | MySQL 8.0+ | PostgreSQL 12+ | Notes |
+|---------|-------------|-----------------|-------|
+| **Hosting Support** | ✅ Universal | ⚠️ VPS/Dedicated mostly | MySQL more common on shared hosting |
+| **UUIDs** | ✅ Native UUID() | ✅ Native uuid_generate_v4() | Both support modern UUID primary keys |
+| **JSON Support** | ✅ JSON data type | ✅ JSONB with GIN indexes | PostgreSQL slightly faster for JSON queries |
+| **Constraints** | ✅ CHECK constraints | ✅ Advanced CHECK constraints | PostgreSQL has more validation options |
+| **Performance** | ✅ Excellent | ✅ Excellent | Both optimized for dashboard workloads |
+| **Mockup Data** | ✅ Included | ✅ Included | Same demo data for both systems |
+
+**💡 Quick Decision Guide:**
+
+- **Choose MySQL** if: Shared hosting, most common, easier setup
+- **Choose PostgreSQL** if: VPS/dedicated server, advanced features needed
+
 ## Mockup Data
 
 The application includes built-in mockup data for:
@@ -136,11 +193,34 @@ Perfect for demonstrations without needing a real FiveM server!
 - ✅ **Security Headers** - XSS protection, clickjacking prevention
 - ✅ **SEO Ready** - Proper meta tags and structure
 
-## Support
+## Troubleshooting
 
-If you encounter issues:
+### Database Connection Issues
 
-1. Check browser console for errors
-2. Verify database connection in `api/config/database.php`
-3. Ensure PHP 8.0+ is enabled on your hosting
-4. Check .htaccess is properly uploaded and mod_rewrite is enabled
+#### MySQL Problems
+
+- **"Connection refused"**: Check if MySQL is running and credentials are correct
+- **"Access denied"**: Verify username/password and database permissions
+- **"Database not found"**: Ensure database name matches exactly
+- **"JSON functions missing"**: Upgrade to MySQL 8.0+ (required for modern features)
+
+#### PostgreSQL Problems
+
+- **"UUID extension missing"**: Run `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`
+- **"Permission denied"**: Check user privileges with `\du` command
+- **"Connection limit reached"**: Increase `max_connections` in postgresql.conf
+- **"Database not found"**: Verify database exists and user has access
+
+### General Issues
+
+1. **Check browser console** for JavaScript errors
+2. **Verify database connection** in `api/config/database.php`
+3. **Ensure PHP 8.0+** is enabled on your hosting
+4. **Check .htaccess** is properly uploaded and mod_rewrite is enabled
+5. **Test API endpoints** by visiting `https://5md.p42.studio/api/auth/check_session.php`
+
+### File Upload Issues
+
+- Ensure all `dist/` contents are in the root directory
+- Verify `api/` folder maintains its structure
+- Check file permissions (usually 644 for files, 755 for directories)
