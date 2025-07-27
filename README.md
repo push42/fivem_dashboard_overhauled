@@ -86,7 +86,7 @@ fivem_dashboard/
 ### 1. Clone and Install Dependencies
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/push42/fivem_dashboard_overhauled
 cd fivem_dashboard
 npm install
 ```
