@@ -1,6 +1,8 @@
 # FiveM Dashboard 2.0
 
-A completely modernized FiveM server administration dashboard built with **React 19.1**, modern PHP backend, and Tailwind CSS.
+A completely rebuilt and modernized administration dashboard for FiveM servers — powered by React 19.1, a modern PHP 8+ backend, and Tailwind CSS.
+
+This is the next-generation version of my original [FiveM Dashboard](https://github.com/push42/fivem_dashboard), redesigned from the ground up with a cleaner architecture, better performance, and more powerful features.
 
 ![Main Preview](main.png)
 
