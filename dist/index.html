@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/favicon-BGkOFhRf.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="description" content="Modern FiveM Admin Dashboard with React 19" />
+    <link rel="apple-touch-icon" href="/assets/favicon-BGkOFhRf.png" />
+    <link rel="manifest" href="/assets/manifest-Cc8x3sJY.json" />
+
+    <!-- Modern font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>FiveM Dashboard 2.0 - React 19</title>
+    <script type="module" crossorigin src="/assets/index-CKKuoQGk.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-DJG_os-6.js">
+    <link rel="modulepreload" crossorigin href="/assets/router-D_YpY8TY.js">
+    <link rel="modulepreload" crossorigin href="/assets/query-Bnlnxe_r.js">
+    <link rel="modulepreload" crossorigin href="/assets/ui-BLoA5_9i.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BATrlazi.css">
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this modern React 19 app.</noscript>
+    <div id="root"></div>
+
+    <!-- Modern loading fallback with React 19 Suspense support -->
+    <div
+      id="loading-fallback"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #f9fafb;
+        z-index: 9999;
+      "
+    >
+      <div
+        style="
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+        "
+      >
+        <div
+          style="
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+          "
+        ></div>
+        <p style="color: #6b7280; font-family: 'Inter', sans-serif; margin: 0">
+          Loading FiveM Dashboard...
+        </p>
+      </div>
+    </div>
+
+    <style>
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Modern CSS reset and optimizations */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          'Roboto',
+          'Oxygen',
+          'Ubuntu',
+          'Cantarell',
+          'Fira Sans',
+          'Droid Sans',
+          'Helvetica Neue',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #f9fafb;
+      }
+
+      code {
+        font-family:
+          'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+      }
+    </style>
+  </body>
+</html>

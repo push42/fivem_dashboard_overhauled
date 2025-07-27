@@ -99,7 +99,7 @@ const DashboardLayout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-gray-50">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -111,11 +111,11 @@ const DashboardLayout = ({ children }) => {
       {/* Sidebar */}
       <div
         className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0
+        fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 flex flex-col
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
       >
-        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+        <div className="flex items-center justify-between flex-shrink-0 h-16 px-6 border-b border-gray-200">
           <div className="flex items-center space-x-3">
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-primary-600 to-purple-600">
               <Server className="w-5 h-5 text-white" />
@@ -131,7 +131,7 @@ const DashboardLayout = ({ children }) => {
         </div>
 
         {/* User info */}
-        <div className="p-4 border-b border-gray-200">
+        <div className="flex-shrink-0 p-4 border-b border-gray-200">
           <div className="flex items-center space-x-3">
             <img
               src={user?.avatar_url || '/img/default_avatar.png'}
@@ -149,7 +149,7 @@ const DashboardLayout = ({ children }) => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-4 py-4 space-y-1">
+        <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
           {navigation.map(item => (
             <Link
               key={item.name}
@@ -176,7 +176,7 @@ const DashboardLayout = ({ children }) => {
         </nav>
 
         {/* Logout button */}
-        <div className="p-4 border-t border-gray-200">
+        <div className="flex-shrink-0 p-4 border-t border-gray-200">
           <Button
             onClick={handleLogout}
             variant="ghost"
@@ -189,9 +189,9 @@ const DashboardLayout = ({ children }) => {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top bar */}
-        <div className="sticky top-0 z-30 flex items-center h-16 px-4 bg-white border-b border-gray-200 shadow-sm gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
+        <div className="flex items-center h-16 px-4 bg-white border-b border-gray-200 shadow-sm gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
           <button
             type="button"
             className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
@@ -216,7 +216,7 @@ const DashboardLayout = ({ children }) => {
         </div>
 
         {/* Page content */}
-        <main className="p-4 sm:p-6 lg:p-8">{children}</main>
+        <main className="flex-1 p-4 overflow-y-auto sm:p-6 lg:p-8">{children}</main>
       </div>
     </div>
   );

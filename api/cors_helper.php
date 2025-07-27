@@ -11,9 +11,12 @@
 function setCorsHeaders() {
     $allowedOrigins = [
         'http://localhost:3000',               // Development server (legacy)
+        'http://localhost:5173',               // Vite development server
         'http://fivem_dashboard.test:3000',    // Development server on custom domain
-        'http://fivem_dashboard.test',         // Production domain
-        'https://fivem_dashboard.test'         // Production domain with SSL
+        'http://fivem_dashboard.test:5173',    // Vite development server on custom domain
+        'http://fivem_dashboard.test',         // Development domain
+        'https://fivem_dashboard.test',        // Development domain with SSL
+        'https://5md.p42.studio'               // Production domain
     ];
 
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';

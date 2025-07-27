@@ -4,73 +4,46 @@
   "private": true,
   "dependencies": {
     "@discordjs/core": "^2.0.0",
-    "@tanstack/react-query": "^5.28.4",
-    "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^14.2.1",
-    "@testing-library/user-event": "^14.5.2",
-    "axios": "^1.7.2",
+    "@tanstack/react-query": "^5.83.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
-    "lucide-react": "^0.363.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-query": "^4.0.0",
-    "react-router-dom": "^6.22.3",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^4.2.0"
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.526.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.7.1",
+    "web-vitals": "^4.2.4"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "dev:laragon": "npm run build && npm run deploy && chokidar \"src/**/*\" -c \"npm run build && npm run deploy\"",
-    "dev:watch": "chokidar \"src/**/*\" -c \"npm run deploy\"",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,md}",
-    "deploy": "npm run build && powershell Copy-Item -Path 'build\\*' -Destination '.' -Recurse -Force",
-    "deploy:windows": "npm run build && deploy.bat",
-    "deploy:unix": "npm run build && ./deploy.sh",
-    "dev:api": "echo '🔥 API is served by your Laragon server at http://fivem_dashboard.test/api/'",
-    "clean": "powershell Remove-Item -Path 'build' -Recurse -Force -ErrorAction SilentlyContinue",
-    "info": "echo 🌐 Development: http://localhost:3000 ^| Production: http://fivem_dashboard.test"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "no-unused-vars": "warn",
-      "no-console": "warn"
-    }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "deploy": "npm run build && powershell Copy-Item -Path 'dist\\*' -Destination '.' -Recurse -Force",
+    "clean": "powershell Remove-Item -Path 'dist' -Recurse -Force -ErrorAction SilentlyContinue"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "^0.5.7",
-    "@tailwindcss/typography": "^0.5.12",
-    "@types/react": "^18.2.79",
-    "@types/react-dom": "^18.2.23",
-    "autoprefixer": "^10.4.19",
+    "@babel/plugin-transform-private-property-in-object": "^7.25.8",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
     "chokidar-cli": "^3.0.0",
     "eslint": "^8.57.0",
-    "http-proxy-middleware": "^3.0.5",
-    "postcss": "^8.4.38",
-    "prettier": "^3.2.5",
-    "tailwindcss": "^3.4.3"
+    "postcss": "^8.5.1",
+    "prettier": "^3.4.2",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8"
   }
 }
