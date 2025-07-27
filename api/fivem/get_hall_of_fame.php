@@ -1,9 +1,15 @@
 <?php
 require_once '../config/database.php';
+require_once '../cors_helper.php';
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET');
+// Clean any output buffering and start fresh
+if (ob_get_level()) {
+    ob_end_clean();
+}
+ob_start();
+
+// Initialize CORS
+initCors();
 
 try {
     $db = Database::getInstance();
@@ -136,4 +142,9 @@ try {
         'error' => 'Failed to fetch hall of fame: ' . $e->getMessage()
     ]);
 }
+
+// Clean output and send
+$output = ob_get_clean();
+header('Content-Type: application/json');
+echo $output;
 ?>
