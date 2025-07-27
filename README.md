@@ -1,163 +1,247 @@
-# FiveM Admin Dashboard 2.0
+# FiveM Dashboard 2.0
 
-> A modern, fully-featured admin dashboard for FiveM servers built with React 18, PHP 8+, and modern best practices.
+A completely modernized FiveM server administration dashboard built with React 18, modern PHP backend, and Tailwind CSS.
 
 ## 🚀 Features
 
-- **Modern React Frontend**: Built with React 18, React Query, and React Router
-- **Responsive Design**: Mobile-first design with Tailwind CSS
-- **Real-time Updates**: Live chat, server status, and user activity monitoring
-- **Task Management**: Advanced todo system with completion tracking
-- **User Management**: Role-based authentication and user controls
-- **Server Monitoring**: Real-time server status and player count
-- **Modern UI/UX**: Clean, intuitive interface with smooth animations
-- **Security**: JWT authentication, input validation, and SQL injection protection
-- **Performance**: Optimized bundle sizes and lazy loading
+### Core Dashboard Features
 
-## 🛠️ Technology Stack
+- **🎮 Real-time FiveM Server Integration** - Live data from your FiveM server database
+- **📊 Advanced Analytics** - Player statistics, server metrics, and performance monitoring
+- **👥 Player Management** - Comprehensive player profiles with jobs, money, and activity tracking
+- **🚗 Vehicle Management** - Complete vehicle ownership and storage tracking
+- **🏆 Hall of Fame** - Leaderboards for richest players, most vehicles, top companies/gangs
+- **💬 Real-time Chat** - Live chat system with statistics and user management
+- **📝 Task Management** - Todo system for server administration
+- **⚙️ Server Monitoring** - Live server status with TrackyServer API integration
 
-### Frontend
-- **React 18** - Modern React with concurrent features
-- **TypeScript** - Type-safe development (optional)
-- **Tailwind CSS 3.4+** - Utility-first CSS framework
-- **React Query** - Server state management and caching
-- **React Router 6** - Client-side routing
-- **Lucide React** - Modern icon library
-- **Axios** - HTTP client with interceptors
+### Technical Features
 
-### Backend
-- **PHP 8+** - Modern PHP with type declarations
-- **MySQL 8** - Relational database
-- **PDO** - Secure database abstraction
-- **Session-based Auth** - Secure authentication system
+- **React 18** with modern hooks and concurrent features
+- **React Query** for efficient server state management
+- **React Router 6** for client-side routing
+- **Tailwind CSS 3.4+** for modern, responsive design
+- **Modern PHP 8+ API** with PDO and prepared statements
+- **Real-time updates** with automatic data refreshing
+- **Responsive design** - works on desktop, tablet, and mobile
+- **Authentication system** with session management
+- **Error handling** and loading states throughout
 
-### Development
-- **Vite** - Fast build tool and dev server
-- **ESLint** - Code linting and formatting
-- **Prettier** - Code formatting
-- **PostCSS** - CSS processing
+## � Project Structure
 
-## 📋 Prerequisites
+```
+fivem_dashboard/
+├── src/                          # React application source
+│   ├── components/
+│   │   ├── dashboard/           # Dashboard-specific components
+│   │   │   ├── FivemOverview.js      # Main dashboard with FiveM stats
+│   │   │   ├── PlayersManagement.js  # Player management interface
+│   │   │   ├── VehicleManagement.js  # Vehicle tracking
+│   │   │   ├── HallOfFame.js         # Leaderboards
+│   │   │   ├── Chat.js               # Real-time chat
+│   │   │   ├── TodoList.js           # Task management
+│   │   │   ├── ServerStatus.js       # Server monitoring
+│   │   │   └── Settings.js           # User settings
+│   │   ├── layout/              # Layout components
+│   │   └── ui/                  # Reusable UI components
+│   ├── pages/                   # Page components
+│   ├── services/                # API services
+│   ├── hooks/                   # Custom React hooks
+│   └── utils/                   # Utility functions
+├── api/                         # PHP Backend API
+│   ├── auth/                    # Authentication endpoints
+│   ├── fivem/                   # FiveM-specific endpoints
+│   │   ├── get_players.php      # Player data from users table
+│   │   ├── get_vehicles.php     # Vehicle data from owned_vehicles
+│   │   ├── get_hall_of_fame.php # Leaderboard calculations
+│   │   └── get_server_status.php # Server status with TrackyServer
+│   ├── chat/                    # Chat system endpoints
+│   ├── todo/                    # Task management endpoints
+│   └── config/                  # Database configuration
+├── public/                      # Static assets
+└── build/                       # Production build output
+```
 
-- **Node.js 18+** and npm/yarn
-- **PHP 8.0+** with extensions: PDO, MySQL, JSON
-- **MySQL 8.0+** or MariaDB 10.6+
-- **Web server** (Apache/Nginx) with PHP support
+## 🔧 Installation & Setup
 
-## 🚀 Installation
+### Prerequisites
 
-### 1. Clone the Repository
+- Node.js 18+ and npm
+- PHP 8+ with PDO MySQL extension
+- MySQL/MariaDB database
+- Web server (Apache/Nginx)
+
+### 1. Clone and Install Dependencies
+
 ```bash
-git clone https://github.com/reverseHaze/fivem_dashboard.git
+git clone <repository-url>
 cd fivem_dashboard
-```
-
-### 2. Install Dependencies
-```bash
-# Install Node.js dependencies
 npm install
-
-# Or using yarn
-yarn install
 ```
 
-### 3. Database Setup
-1. Create a MySQL database named `webdev`
-2. Import the SQL schema:
+### 2. Database Configuration
+
+Edit `api/config/database.php` with your database credentials:
+
+```php
+// Main dashboard database
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'webdev');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+
+// FiveM server database
+define('FIVEM_DB_HOST', 'localhost');
+define('FIVEM_DB_NAME', 'your_fivem_database');
+define('FIVEM_DB_USER', 'root');
+define('FIVEM_DB_PASS', '');
+
+// TrackyServer API (optional)
+define('TRACKY_SERVER_KEY', 'your_api_key');
+define('TRACKY_SERVER_ID', 'your_server_id');
+```
+
+### 3. Import Database Schema
+
+Import the SQL file to create required tables:
+
 ```bash
 mysql -u root -p webdev < sql/fivem_dashboard.sql
 ```
 
-### 4. Configuration
-1. Update database credentials in `/api/index.php`:
-```php
-private function __construct() {
-    $config = [
-        'host' => 'localhost',
-        'dbname' => 'webdev',
-        'username' => 'root',
-        'password' => '',
-        'charset' => 'utf8mb4'
-    ];
-    // ...
-}
-```
+### 4. Build for Production
 
-2. Configure your web server to serve the project directory
-
-### 5. Development Server
 ```bash
-# Start the React development server
-npm start
-
-# Or using yarn
-yarn start
-```
-
-The app will be available at `http://localhost:3000`
-
-### 6. Production Build
-```bash
-# Build for production
 npm run build
-
-# Or using yarn
-yarn build
 ```
 
-## 🔧 Available Scripts
+### 5. Deploy
 
-- `npm start` - Start development server
-- `npm run build` - Build for production
-- `npm test` - Run test suite
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint errors
-- `npm run format` - Format code with Prettier
+Copy the `build/` folder contents to your web server document root, ensuring the `api/` folder is also accessible.
 
-## 📁 Project Structure
+## 🎯 FiveM Integration
 
-```
-fivem_dashboard/
-├── public/                 # Static assets
-├── src/                   # React source code
-│   ├── components/        # Reusable components
-│   │   ├── ui/           # UI components (Button, Card, etc.)
-│   │   ├── layout/       # Layout components
-│   │   └── dashboard/    # Dashboard-specific components
-│   ├── hooks/            # Custom React hooks
-│   ├── pages/            # Page components
-│   ├── services/         # API services and utilities
-│   ├── utils/            # Helper functions
-│   ├── App.js            # Main App component
-│   └── index.js          # Entry point
-├── api/                  # PHP backend API
-│   ├── auth/             # Authentication endpoints
-│   ├── todo/             # Todo API endpoints
-│   ├── chat/             # Chat API endpoints
-│   └── index.php         # API router
-├── sql/                  # Database schema
-└── legacy/               # Original PHP files (for reference)
-```
+### Required Database Tables
 
-## 🔒 Security Features
+The dashboard expects these tables in your FiveM database:
 
-- **Input Validation**: All user inputs are validated and sanitized
-- **SQL Injection Protection**: Prepared statements for all database queries
-- **XSS Prevention**: Proper output encoding and CSP headers
-- **CSRF Protection**: Token-based CSRF protection
-- **Session Security**: Secure session configuration
-- **Password Hashing**: bcrypt password hashing
+- **`users`** - Player accounts with identifiers, names, jobs, money
+- **`owned_vehicles`** - Vehicle ownership data
+- **`company_money`** - Company/business finances (optional)
+- **`gang_money`** - Gang finances (optional)
 
-## 🌟 New Features in 2.0
+### Supported Frameworks
 
-- **Component-based Architecture**: Modular React components
-- **Real-time Data**: Live updates without page refresh
-- **Modern State Management**: React Query for server state
-- **Responsive Design**: Works on all device sizes
-- **Improved Performance**: Code splitting and lazy loading
-- **Better UX**: Smooth animations and loading states
-- **Type Safety**: Optional TypeScript support
-- **Modern Tooling**: Vite, ESLint, Prettier
+- **ESX** - Full compatibility with ESX player and vehicle systems
+- **QBCore** - Compatible with QBCore database structure
+- **Custom** - Easily adaptable to custom database schemas
+
+## 🎨 Dashboard Sections
+
+### 1. Overview Dashboard
+
+- Real-time player count and server status
+- Key performance metrics and statistics
+- Quick access to critical information
+- Hall of Fame preview
+
+### 2. Players Management
+
+- Complete player database with search and filtering
+- Player profiles showing jobs, ranks, and finances
+- Money tracking (cash, bank, black money)
+- Last seen and activity monitoring
+
+### 3. Vehicle Management
+
+- All registered vehicles with ownership details
+- Storage status (garage/out on map)
+- Search by model, plate, or owner
+- Vehicle statistics and analytics
+
+### 4. Hall of Fame
+
+- **Richest Players** - Top players by total money
+- **Most Vehicles** - Players with most owned vehicles
+- **Most Active** - Recently active players
+- **Organizations** - Top companies and gangs by wealth
+
+### 5. Live Chat
+
+- Real-time messaging system
+- User presence indicators
+- Chat statistics and moderation tools
+- Message history and search
+
+### 6. Server Monitoring
+
+- Live server status via TrackyServer API
+- Player count and connection monitoring
+- Server performance metrics
+- Uptime and version tracking
+
+## � Security Features
+
+- **Session-based authentication** with secure session handling
+- **SQL injection protection** via PDO prepared statements
+- **XSS protection** with proper input sanitization
+- **CSRF protection** with token validation
+- **Rate limiting** on API endpoints
+- **Secure password hashing** with PHP's password_hash()
+
+## 🚀 Performance Optimizations
+
+- **React Query caching** for efficient data fetching
+- **Optimized re-renders** with React.memo and useMemo
+- **Code splitting** for faster initial load times
+- **Image optimization** and lazy loading
+- **Minified production builds**
+- **Database query optimization** with indexed lookups
+
+## 🎨 Customization
+
+### Styling
+
+The dashboard uses Tailwind CSS for easy customization:
+
+- Edit `tailwind.config.js` for theme customization
+- Modify color schemes in component files
+- Responsive breakpoints easily adjustable
+
+### Adding New Features
+
+1. Create new API endpoints in `api/` folder
+2. Add corresponding service functions in `src/services/`
+3. Create React components in `src/components/dashboard/`
+4. Update navigation in `DashboardLayout.js`
+
+## 📱 Mobile Support
+
+Fully responsive design with:
+
+- Mobile-optimized navigation
+- Touch-friendly interfaces
+- Adaptive layouts for all screen sizes
+- Progressive Web App capabilities
+
+## 🔄 Version History
+
+### Version 2.0.0 (Current)
+
+- Complete rewrite with React 18
+- Modern PHP 8+ backend
+- Enhanced FiveM integration
+- Real-time features
+- Mobile-responsive design
+- Comprehensive player/vehicle management
+- Hall of Fame system
+
+### Version 1.0.0 (Legacy)
+
+- Original PHP-based dashboard
+- Basic FiveM integration
+- jQuery-based frontend
+- Limited mobile support
 
 ## 🤝 Contributing
 
@@ -171,62 +255,14 @@ fivem_dashboard/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Author
+## 🆘 Support
 
-**Thies Bergenthal (@reverseHaze)**
-- GitHub: [@reverseHaze](https://github.com/reverseHaze)
-- Project: [Projekt #1](https://roguev.de/) | [Projekt #2](https://trap-life.de/)
+For support and questions:
 
-## 🙏 Acknowledgments
-
-- FiveM community for inspiration
-- React team for the amazing framework
-- Tailwind CSS team for the utility-first approach
-- Contributors and testers
+- Check the documentation
+- Review existing issues
+- Create a new issue with detailed information
 
 ---
 
-Made with ❤️ by [push.42](https://github.com/reverseHaze)
-3. Update the database connection inside the `.php` files with your specific server details and Trackyserver API key.
-4. Host the files on your server, accessible through your domain or IP address.
-5. You're all set! Visit the dashboard through your chosen access point.
-
-## Contributing
-
-This project is open source, and contributions are always welcomed! Whether it's bug reports, feature suggestions, or code improvements - all forms of contribution help.
-
-1. Fork the project.
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a pull request.
-
-Please ensure your pull request adheres to the following guidelines:
-
-- Write clear, meaningful commit messages.
-- The pull request description should describe what your patch does.
-- If your PR changes the UI, it should include "before" and "after" screenshots.
-
-## Disclaimer
-
-This project doesn't use or provide any sensitive data. Please make sure to change the Trackyserver API key and other personalizable settings to match your own before deploying this dashboard.
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Contact
-
-Thies Bergenthal - thiesmk2@gmail.com - Discord: push.42
-
-Project Link: [https://github.com/reverseHaze/fivem_dashboard](https://github.com/reverseHaze/fivem_dashboard)
-
----
-
-Crafted with ❤️ by a passionate FiveM server administrator. Happy gaming and server managing!
-
-## Acknowledgements
-
-- FiveM Community
-- TrackyServer API
-- All contributors who help to make this dashboard better!
+**Built with ❤️ for the FiveM community**

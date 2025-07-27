@@ -20,7 +20,7 @@ const Chat = () => {
     queryKey: ['messages'],
     queryFn: async () => {
       const response = await chatAPI.getMessages();
-      return response.data || [];
+      return response.data?.messages || [];
     },
     refetchInterval: 5000, // Refetch every 5 seconds
   });

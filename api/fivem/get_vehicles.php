@@ -12,15 +12,15 @@ try {
     // Get vehicles with owner information
     $stmt = $fivemDb->prepare("
         SELECT
-            ov.owner,
-            ov.plate,
-            ov.vehicle,
-            ov.stored,
+            v.owner,
+            v.plate,
+            v.vehicle,
+            v.stored,
             u.firstname,
             u.lastname
-        FROM owned_vehicles ov
-        LEFT JOIN users u ON ov.owner = u.identifier
-        ORDER BY ov.plate
+        FROM vehicles v
+        LEFT JOIN users u ON v.owner = u.identifier
+        ORDER BY v.plate
     ");
 
     $stmt->execute();

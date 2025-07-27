@@ -8,68 +8,104 @@ header('Access-Control-Allow-Methods: GET');
 try {
     $db = Database::getInstance();
     $fivemDb = $db->getFivemConnection();
+    $fivemDbType = $db->getFivemDbType();
 
     $hallOfFame = [];
 
-    // Richest Players (by bank + money)
-    $stmt = $fivemDb->prepare("
-        SELECT
-            identifier,
-            firstname,
-            lastname,
-            accounts,
-            (JSON_EXTRACT(accounts, '$.money') + JSON_EXTRACT(accounts, '$.bank')) as total_money
-        FROM users
-        WHERE accounts IS NOT NULL
-        ORDER BY total_money DESC
-        LIMIT 10
-    ");
+    // Richest Players (by bank + money) - using separate money and bank columns
+    if ($fivemDbType === 'postgresql') {
+        $stmt = $fivemDb->prepare("
+            SELECT
+                identifier,
+                firstname,
+                lastname,
+                money,
+                bank,
+                (COALESCE(money, 0) + COALESCE(bank, 0)) as total_money
+            FROM users
+            WHERE identifier IS NOT NULL
+            ORDER BY total_money DESC
+            LIMIT 10
+        ");
+    } else {
+        $stmt = $fivemDb->prepare("
+            SELECT
+                identifier,
+                firstname,
+                lastname,
+                money,
+                bank,
+                (COALESCE(money, 0) + COALESCE(bank, 0)) as total_money
+            FROM users
+            WHERE identifier IS NOT NULL
+            ORDER BY total_money DESC
+            LIMIT 10
+        ");
+    }
     $stmt->execute();
     $hallOfFame['richest'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Most Vehicles
+    // Most Vehicles - using vehicles table instead of owned_vehicles
     $stmt = $fivemDb->prepare("
         SELECT
             u.identifier,
             u.firstname,
             u.lastname,
-            COUNT(ov.owner) as vehicle_count
+            COUNT(v.owner) as vehicle_count
         FROM users u
-        LEFT JOIN owned_vehicles ov ON u.identifier = ov.owner
-        GROUP BY u.identifier
+        LEFT JOIN vehicles v ON u.identifier = v.owner
+        GROUP BY u.identifier, u.firstname, u.lastname
         ORDER BY vehicle_count DESC
         LIMIT 10
     ");
     $stmt->execute();
     $hallOfFame['most_vehicles'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Most Active (by playtime if available)
-    $stmt = $fivemDb->prepare("
-        SELECT
-            identifier,
-            firstname,
-            lastname,
-            last_seen,
-            DATE_FORMAT(FROM_UNIXTIME(last_seen/1000), '%Y-%m-%d %H:%i:%s') as last_seen_formatted
-        FROM users
-        ORDER BY last_seen DESC
-        LIMIT 10
-    ");
+    // Most Active (by last login) - using last_login instead of last_seen
+    if ($fivemDbType === 'postgresql') {
+        $stmt = $fivemDb->prepare("
+            SELECT
+                identifier,
+                firstname,
+                lastname,
+                last_login,
+                last_login::text as last_seen_formatted
+            FROM users
+            ORDER BY last_login DESC NULLS LAST
+            LIMIT 10
+        ");
+    } else {
+        $stmt = $fivemDb->prepare("
+            SELECT
+                identifier,
+                firstname,
+                lastname,
+                last_login as last_seen,
+                DATE_FORMAT(last_login, '%Y-%m-%d %H:%i:%s') as last_seen_formatted
+            FROM users
+            ORDER BY last_login DESC
+            LIMIT 10
+        ");
+    }
     $stmt->execute();
     $hallOfFame['most_active'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Company Money Leaderboard
-    $stmt = $fivemDb->prepare("
-        SELECT
-            company_name,
-            money,
-            owner
-        FROM company_money
-        ORDER BY money DESC
-        LIMIT 10
-    ");
-    $stmt->execute();
-    $hallOfFame['richest_companies'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    try {
+        $stmt = $fivemDb->prepare("
+            SELECT
+                company_name,
+                money,
+                owner
+            FROM company_money
+            ORDER BY money DESC
+            LIMIT 10
+        ");
+        $stmt->execute();
+        $hallOfFame['richest_companies'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        $hallOfFame['richest_companies'] = [];
+    }
 
     // Gang Money Leaderboard (if table exists)
     try {
@@ -90,7 +126,8 @@ try {
 
     echo json_encode([
         'success' => true,
-        'hall_of_fame' => $hallOfFame
+        'hall_of_fame' => $hallOfFame,
+        'database_type' => $fivemDbType
     ]);
 
 } catch (Exception $e) {

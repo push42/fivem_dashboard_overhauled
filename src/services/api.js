@@ -1,8 +1,18 @@
 import axios from 'axios';
 
+// Determine base URL based on environment
+const getBaseURL = () => {
+  // In development, if we're on port 3000, we need to call the main domain
+  if (process.env.NODE_ENV === 'development' && window.location.port === '3000') {
+    return 'http://fivem_dashboard.test/api';
+  }
+  // Otherwise use relative path
+  return '/api';
+};
+
 // Create axios instance with default config
 export const api = axios.create({
-  baseURL: '/api', // Adjust based on your PHP API structure
+  baseURL: getBaseURL(), // Dynamic base URL
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -39,9 +49,11 @@ api.interceptors.response.use(
       window.location.href = '/login';
     } else if (error.response?.status === 403) {
       // Forbidden
+      // eslint-disable-next-line no-console
       console.warn('Access denied');
     } else if (error.response?.status >= 500) {
       // Server errors
+      // eslint-disable-next-line no-console
       console.error('Server error:', error.response.data);
     }
 

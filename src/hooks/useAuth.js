@@ -33,7 +33,14 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: false, error: response.data.message };
     } catch (error) {
-      return { success: false, error: 'Login failed. Please try again.' };
+      // eslint-disable-next-line no-console
+      console.error('Login error:', error);
+      // eslint-disable-next-line no-console
+      console.error('Response data:', error.response?.data);
+      return {
+        success: false,
+        error: 'Login failed. Please try again.',
+      };
     }
   };
 

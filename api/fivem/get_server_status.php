@@ -1,9 +1,15 @@
 <?php
 require_once '../config/database.php';
+require_once '../cors_helper.php';
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET');
+// Clean any output buffering and start fresh
+if (ob_get_level()) {
+    ob_end_clean();
+}
+ob_start();
+
+// Initialize CORS
+initCors();
 
 try {
     // Try to get server status from TrackyServer API
@@ -33,17 +39,17 @@ try {
     $stmt->execute();
     $totalUsers = $stmt->fetch()['total_users'];
 
-    // Get recent activity (users seen in last 24 hours)
+    // Get recent activity (users seen in last 24 hours - using last_login since last_seen doesn't exist)
     $stmt = $fivemDb->prepare("
         SELECT COUNT(*) as active_users
         FROM users
-        WHERE last_seen > (UNIX_TIMESTAMP() - 86400) * 1000
+        WHERE last_login > NOW() - INTERVAL '24 hours'
     ");
     $stmt->execute();
     $activeUsers = $stmt->fetch()['active_users'];
 
     // Get total vehicles
-    $stmt = $fivemDb->prepare("SELECT COUNT(*) as total_vehicles FROM owned_vehicles");
+    $stmt = $fivemDb->prepare("SELECT COUNT(*) as total_vehicles FROM vehicles");
     $stmt->execute();
     $totalVehicles = $stmt->fetch()['total_vehicles'];
 
@@ -72,4 +78,8 @@ try {
         'error' => 'Failed to fetch server status: ' . $e->getMessage()
     ]);
 }
-?>
+
+// Clean output and send
+$output = ob_get_clean();
+header('Content-Type: application/json');
+echo $output;

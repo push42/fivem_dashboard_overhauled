@@ -39,9 +39,13 @@ const Login = () => {
       if (result.success) {
         showToast('success', 'Welcome back!');
       } else {
+        // eslint-disable-next-line no-console
+        console.error('Login failed:', result);
         showToast('error', result.error || 'Login failed');
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Login exception:', error);
       showToast('error', 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
